@@ -1,6 +1,6 @@
 <template>
 <v-container grid-list-md>
-    <h1 class='primary--text mb-2'><v-icon large class='primary--text'>rss_feed</v-icon> 최신글 확인</h1>
+    <h1 class='primary--text mb-2'><v-icon large class='primary--text'>rss_feed</v-icon> 관심작가 최신글</h1>
     <v-card>
       <v-container>
         <v-layout>
@@ -73,7 +73,7 @@
                   </span> -->
                 </v-list-tile-avatar>
                 <v-list-tile-content>
-                  <v-list-tile-title><a class='font-weight-medium' :href="`https://steemit.com/${feed.url}`" target="_blank">{{ feed.title }}</a></v-list-tile-title>
+                  <v-list-tile-title><a class='font-weight-medium' :href="`https://steemit.com${feed.url}`" target="_blank">{{ feed.title }}</a></v-list-tile-title>
                   <!-- <v-list-tile-sub-title class='ellipsis-text-two hidden-sm-and-down'>{{feed.body}}</v-list-tile-sub-title>
                   <v-list-tile-sub-title class='ellipsis-text hidden-md-and-up'>{{feed.body}}</v-list-tile-sub-title>
                   <v-list-tile-sub-title class='hidden-md-and-up post-meta font-italic'>
