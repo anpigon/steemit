@@ -1,7 +1,6 @@
 <template>
 <v-container grid-list-md>
     <h1 class='primary--text mb-2'><v-icon large class='primary--text'>rss_feed</v-icon> 최신글 확인</h1>
-    
     <v-card>
       <v-container>
         <v-layout>
