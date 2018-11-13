@@ -9,10 +9,18 @@
       <v-list dense>
         <v-list-tile to="/">
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon>rss_feed</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
+            <v-list-tile-title>최신글 확인</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="https://anpigon.github.io/steemit-calculator/" target="_blank">
+          <v-list-tile-action>
+            <v-icon>money</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>업보팅 계산기 <v-icon small>launch</v-icon></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <!-- <v-list-tile @click="">
@@ -52,8 +60,8 @@
   </v-app>
 </template>
 <style>
-div {
-  font-family: 'Noto Serif KR', '맑은고딕', '돋움', sans-serif;
+.hangul_serif {
+  font-family: 'Noto Serif KR', 'Malgun Gothic', 'NanumGothic', 'Dotum', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 .v-toolbar__title {
@@ -93,7 +101,10 @@ export default {
   mounted () {
     WebFontLoader.load({
       google: {
-        families: ['Roboto:100,300,400,500,700,900', 'Noto+Serif+KR:100,300,400,500,700,900']
+        families: [
+          'Roboto:100,300,400,500,700,900', 
+          // 'Noto+Serif+KR:100,300,400,500,700,900'
+        ]
       },
       active: this.setFontLoaded
     })

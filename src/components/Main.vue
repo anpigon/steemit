@@ -69,22 +69,26 @@
               <v-list-tile avatar>
                 <v-list-tile-avatar>
                   <img :src="`https://steemitimages.com/u/${feed.author}/avatar/small`" :alt="feed.author">
-                  <span class='hidden-sm-and-down username caption ellipsis-text font-weight-bold'>
+                  <!-- <span class='hidden-sm-and-down username caption ellipsis-text font-weight-bold'>
                     <a :href="`https://steemit.com/@${feed.author}`" target="_blank">{{ feed.author }}</a>
-                  </span>
+                  </span> -->
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title><a class='font-weight-medium' :href="`https://steemit.com/${feed.url}`" target="_blank">{{ feed.title }}</a></v-list-tile-title>
-                  <v-list-tile-sub-title class='ellipsis-text-two hidden-sm-and-down'>{{feed.body}}</v-list-tile-sub-title>
-                  <v-list-tile-sub-title class='ellipsis-text text-no-wrap text-truncate hidden-md-and-up'>{{feed.body}}</v-list-tile-sub-title>
+                  <!-- <v-list-tile-sub-title class='ellipsis-text-two hidden-sm-and-down'>{{feed.body}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title class='ellipsis-text hidden-md-and-up'>{{feed.body}}</v-list-tile-sub-title>
                   <v-list-tile-sub-title class='hidden-md-and-up post-meta font-italic'>
+                    Posted by <span class='font-weight-bold subheading'><a :href="`https://steemit.com/@${feed.author}`" target="_blank">{{ feed.author }}</a></span> on <span class='font-weight-bold'>{{ feed.created | dateFormat2 }}</span>
+                  </v-list-tile-sub-title> -->
+                  <v-list-tile-sub-title class='ellipsis-text'>{{feed.body}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title class='post-meta font-italic'>
                     Posted by <span class='font-weight-bold subheading'><a :href="`https://steemit.com/@${feed.author}`" target="_blank">{{ feed.author }}</a></span> on <span class='font-weight-bold'>{{ feed.created | dateFormat2 }}</span>
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-action class="hidden-sm-and-down">
+                <!-- <v-list-tile-action class="hidden-sm-and-down">
                     <v-list-tile-action-text>{{ feed.created | dateFormat }}</v-list-tile-action-text>
                     <v-spacer></v-spacer>
-                </v-list-tile-action>
+                </v-list-tile-action> -->
               </v-list-tile>
             </tamplate>
           </v-list>
