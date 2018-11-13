@@ -15,12 +15,12 @@
               prefix="@"
               color="blue darken-3" 
               label="Username"
-              v-model="username" 
+              v-model="search.username" 
               hint="히스토리를 확인하고 싶은 사용자명을 입력하세요. 최대 100개를 가져옵니다."
               persistent-hint
               :loading="lookupAccountsLoading"
               prepend-inner-icon="account_box"
-              v-on:keyup.enter.space="getHistory">
+              v-on:keyup.enter="getHistory">
             </v-text-field >
             <!-- <div style='position: absolute;z-index: 2;top: 45px;min-width:400px'>
               <v-slide-y-transition>
@@ -47,10 +47,12 @@
     </v-container>
   </v-card>
   
-  <v-layout row v-show='username'>
+  <v-layout>
     <v-flex>
-      <v-card>
-        <v-progress-linear :indeterminate="busy" :active="busy"></v-progress-linear>
+      <v-card row v-show='busy || historyFilter.length > 0'>
+        <v-fade-transition>
+          <v-progress-linear :indeterminate="busy" :active="busy" v-show='busy'></v-progress-linear>
+        </v-fade-transition>
         <v-list _two-line dense>
           <template v-for="(item, index) in historyFilter">
             <v-divider v-if="index > 0" :inset="false" :key="index"></v-divider>
@@ -65,6 +67,15 @@
                   <v-icon small :color="(username === item.op.voter)?'red':'blue'">comment</v-icon>
                   <v-icon small color='red' v-if='username === item.op.author'>arrow_forward</v-icon>
                   <v-icon small color='blue' v-else>arrow_back</v-icon>
+                </template>
+                <template v-else-if="item.op_type === 'transfer'">
+                  <v-icon small :color="(username === item.op.from)?'red':'blue'">account_balance_wallet</v-icon>
+                  <v-icon small color='red' v-if='username === item.op.from'>arrow_forward</v-icon>
+                  <v-icon small color='blue' v-else>arrow_back</v-icon>
+                </template>
+                <template v-else-if="item.op_type === 'curation_reward'">
+                  <v-icon small color="blue">star</v-icon>
+                  <v-icon small color='blue'>arrow_back</v-icon>
                 </template>
               </v-list-tile-avatar>
               <v-list-tile-content>
@@ -86,8 +97,26 @@
                     </span>
                   </v-list-tile-title>
                   <v-list-tile-sub-title>
-                  <div class='comment_body'>{{item.op.body}}</div>
+                    {{item.op.body}}
                   </v-list-tile-sub-title>
+                </template>
+                <template v-else-if="item.op_type === 'transfer'">
+                  <v-list-tile-title>
+                  	<a :href="'https://steemit.com/@' + item.op.from" target="_blank">@{{item.op.from}}</a> 
+                    send {{item.op.amount}} to 
+                    <a :href="'https://steemit.com/@' + item.op.to" target="_blank">@{{item.op.to}}</a>
+                  </v-list-tile-title>
+                  <v-list-tile-sub-title>
+                    {{item.op.memo}}
+                  </v-list-tile-sub-title>
+                </template>
+                <template v-else-if="item.op_type === 'curation_reward'">
+                  <v-list-tile-title>
+                    <!-- <a :href="'https://steemit.com/@' + item.op.curator" target="_blank">@{{item.op.curator}}</a>  -->
+                    curation reward: : {{item.op.reward}}
+                    for 
+                    <a :href="'https://steemit.com/@' + item.op.comment_author + '/' + item.op.comment_permlink" target='_blank'>@{{item.op.comment_author}}/{{item.op.comment_permlink}}</a> 
+                  </v-list-tile-title>
                 </template>
                 <template v-else>
                   {{JSON.stringify(item.op)}}
@@ -105,6 +134,16 @@
   </v-layout>
 </v-container>      
 </template>
+<style scoped>
+.comment_body {
+  /* width: 95%; */
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  padding: 8px;
+  margin: 2px;
+}
+</style>
+
 <script>
 import steem from 'steem';
 
@@ -112,10 +151,13 @@ export default {
   name: 'History',
   data() {
     return {
+      search: {
+        username: '',
+      },
       username: '',
       items: [],
       historyId: -1,
-      busy: true,
+      busy: false,
       lookupAccounts: [],
       lookupAccountsLoading: false,
       author: '',
@@ -138,9 +180,12 @@ export default {
   computed: {
     historyFilter() {
       return this.items.filter((e) => {
-        return ['vote', 'comment'].includes(e.op_type)
+        return ['vote', 'comment', 'transfer', 'curation_reward'].includes(e.op_type)
       });
-    }
+    },
+    // username() {
+    //   return this.search.username.trim();
+    // }
   },
   methods: {
     // selectedAutoUsername(username) {
@@ -150,9 +195,12 @@ export default {
     //   getHistory ();
     // },
     async getHistory () {
-      if( this.username ) {
+      const username = this.search.username.trim();
+      if( username ) {
         this.busy = true;
-        const his = await steem.api.getAccountHistoryAsync(this.username.trim(), -1, 100);
+        this.items = [];
+        const his = await steem.api.getAccountHistoryAsync(username, -1, 100);
+        this.username = username;
         console.log(his);
         this.items = his.reverse().map(([id, e]) => {
           // console.log(e);
@@ -170,7 +218,7 @@ export default {
     }
   },
   created() {
-    this.getHistory();
+    // this.getHistory();
   }
 };
 </script>
