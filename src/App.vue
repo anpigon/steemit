@@ -85,7 +85,7 @@
 </style>
 <script>
 import Main from './components/Main'
-import WebFontLoader from 'webfontloader'
+// import WebFontLoader from 'webfontloader'
 
 // https://vuetifyjs.com/en/components/tabs#example-fixed-tabs
 export default {
@@ -98,21 +98,21 @@ export default {
       drawer: this.$vuetify.breakpoint.lgAndUp,
     }
   },
-  mounted () {
-    WebFontLoader.load({
-      google: {
-        families: [
-          'Roboto:100,300,400,500,700,900', 
-          // 'Noto+Serif+KR:100,300,400,500,700,900'
-        ]
-      },
-      active: this.setFontLoaded
-    })
-  },
-  methods: {
-    setFontLoaded () {
-      this.$emit('font-loaded')
-    }
-  }
+  // mounted () {
+  //   WebFontLoader.load({
+  //     google: {
+  //       families: [
+  //         'Roboto:100,300,400,500,700,900', 
+  //         // 'Noto+Serif+KR:100,300,400,500,700,900'
+  //       ]
+  //     },
+  //     active: this.setFontLoaded
+  //   })
+  // },
+  // methods: {
+  //   setFontLoaded () {
+  //     this.$emit('font-loaded')
+  //   }
+  // }
 }
 </script>
