@@ -75,7 +75,7 @@
   /* white-space: nowrap!important; */
 }
 .ellipsis-text {
-  display: -webkit-box!important;
+  display: block!important;
   -webkit-line-clamp: 1!important;
   white-space: nowrap!important;
 }
