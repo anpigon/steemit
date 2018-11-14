@@ -70,10 +70,14 @@
 .ellipsis-text, .ellipsis-text-two , .ellipsis-text-three {
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 1!important;
   /* display: -webkit-box!important; */
   -webkit-box-orient: vertical;
   /* white-space: nowrap!important; */
+}
+.ellipsis-text {
+  display: -webkit-box!important;
+  -webkit-line-clamp: 1!important;
+  white-space: nowrap!important;
 }
 .ellipsis-text-two {
   -webkit-line-clamp: 2!important;
