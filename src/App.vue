@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      :clipped="$vuetify.breakpoint.lgAndUp"
+      :clipped="$vuetify.breakpoint.mdAndUp"
       v-model="drawer"
       fixed
       app
